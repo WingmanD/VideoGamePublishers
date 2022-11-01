@@ -2,7 +2,7 @@
 Otvoreni skup podataka o izdavačima video igara, njihovim studijima i igrama. 
 
 - Naslov: VideoGamePublishers
-- Licenca: CC BY 4.0
+- Licenca: GPL 3.0
 - Naziv autora: David Čemeljić
 - Verzija skupa podataka: 1.0
 - Jezik: engleski
