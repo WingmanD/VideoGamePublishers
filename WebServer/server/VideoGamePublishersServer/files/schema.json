@@ -1,0 +1,104 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://127.0.0.1/data/schema.json",
+  "title": "VideoGamePublisher",
+  "description": "A video game publisher",
+  "type": "object",
+  "properties": {
+    "publisherID": {
+      "description": "The name of the video game publisher",
+      "type": "integer"
+    },
+    "publisherName": {
+      "description": "The name of the video game publisher",
+      "type": "string"
+    },
+    "publisherDateFounded": {
+      "description": "The date the video game publisher was founded",
+      "type": "date"
+    },
+    "publisherCountry": {
+      "description": "The country the video game publisher origins from",
+      "type": "string"
+    },
+    "publisherDesc": {
+      "description": "A short description of the publisher",
+      "type": "string"
+    },
+    "publisherWebsite": {
+      "description": "URL of the publishers website",
+      "type": "string"
+    },
+    "publisherDirector": {
+      "description": "CEO of the publisher",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the director",
+          "type": "string"
+        },
+        "surname": {
+          "description": "The surname of the director",
+          "type": "string"
+        }
+      }
+    },
+    "studios": {
+      "description": "A list of studios that are owned by the publisher",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the studio",
+            "type": "string"
+          },
+          "dateFounded": {
+            "description": "The date the studio was founded",
+            "type": "date"
+          },
+          "country": {
+            "description": "The country the studio origins from",
+            "type": "string"
+          },
+          "director": {
+            "description": "CEO of the studio",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the director",
+                "type": "string"
+              },
+              "surname": {
+                "description": "The surname of the director",
+                "type": "string"
+              }
+            }
+          },
+          "titles": {
+            "description": "A list of games that are developed by the studio",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "description": "The name of the game",
+                  "type": "string"
+                },
+                "releaseDate": {
+                  "description": "The date the game was released",
+                  "type": "date"
+                },
+                "genre": {
+                  "description": "Genre of the game",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [ "publisherID", "publisherName", "publisherDateFounded", "publisherCountry", "publisherDesc", "publisherWebsite", "publisherDirector", "studios" ]
+}

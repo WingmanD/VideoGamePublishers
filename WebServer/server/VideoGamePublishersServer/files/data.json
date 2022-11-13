@@ -1,0 +1,571 @@
+[
+    {
+        "publisherID": 1,
+        "publisherName": "Embracer Group",
+        "publisherDateFounded": "2011-06-01",
+        "publisherCountry": "Sweden",
+        "publisherDesc": "Formerly known as Nordic Games Licensing AB and THQ Nordic AB.",
+        "publisherWebsite": "https://embracer.com/",
+        "publisherDirector": {
+            "name": "Lars",
+            "surname": "Wingefors"
+        },
+        "studios": [
+            {
+                "name": "Coffee Stain Studios",
+                "country": "Sweden",
+                "dateFounded": "2010-01-01",
+                "numDevelopers": 123,
+                "director": {
+                    "name": "Stefan",
+                    "surname": "Hanna"
+                },
+                "titles": [
+                    {
+                        "title": "Satisfactory",
+                        "releaseDate": "2019-03-19",
+                        "genre": "Factory Building Sim"
+                    }
+                ]
+            },
+            {
+                "name": "Ghost Ship Games",
+                "country": "Denmark",
+                "dateFounded": "2016-01-01",
+                "numDevelopers": 32,
+                "director": {
+                    "name": "Søren",
+                    "surname": "Lundgaard"
+                },
+                "titles": [
+                    {
+                        "title": "Deep Rock Galactic",
+                        "releaseDate": "2018-02-28",
+                        "genre": "CO-OP PvE FPS"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 16,
+        "publisherName": "Sony Interactive Entertainment",
+        "publisherDateFounded": "1993-11-16",
+        "publisherCountry": "Japan",
+        "publisherDesc": "Handles research, development, production and sales of hardware and software for PlayStation consoles.",
+        "publisherWebsite": "https://www.sie.com/en/index.html",
+        "publisherDirector": {
+            "name": "Jim",
+            "surname": "Ryan"
+        },
+        "studios": [
+            {
+                "name": "Guerrilla Games",
+                "country": "Netherlands",
+                "dateFounded": "2010-01-01",
+                "numDevelopers": 360,
+                "director": {
+                    "name": "Angie",
+                    "surname": "Smets"
+                },
+                "titles": [
+                    {
+                        "title": "Horizon Zero Dawn",
+                        "releaseDate": "2017-02-28",
+                        "genre": "Open World RPG"
+                    },
+                    {
+                        "title": "Horizon Forbidden West",
+                        "releaseDate": "2022-02-18",
+                        "genre": "Open World RPG"
+                    }
+                ]
+            },
+            {
+                "name": "Santa Monica Studio",
+                "country": "United States",
+                "dateFounded": "1999-01-01",
+                "numDevelopers": 250,
+                "director": {
+                    "name": "Yumi",
+                    "surname": "Yang"
+                },
+                "titles": [
+                    {
+                        "title": "God of War",
+                        "releaseDate": "2018-04-20",
+                        "genre": "RPG"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 2,
+        "publisherName": "505 Games",
+        "publisherDateFounded": "2006-01-01",
+        "publisherCountry": "Italy",
+        "publisherDesc": "Medium sized publisher based in Milan.",
+        "publisherWebsite": "https://505games.com/",
+        "publisherDirector": {
+            "name": "Neil",
+            "surname": "Ralley"
+        },
+        "studios": [
+            {
+                "name": "505 Games",
+                "country": "Italy",
+                "dateFounded": "2006-01-01",
+                "numDevelopers": 66,
+                "director": {
+                    "name": "Neil",
+                    "surname": "Ralley"
+                },
+                "titles": [
+                    {
+                        "title": "Control",
+                        "releaseDate": "2019-08-27",
+                        "genre": "Paranormal RPG"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 3,
+        "publisherName": "Xbox Game Studios",
+        "publisherDateFounded": "2006-01-01",
+        "publisherCountry": "United States",
+        "publisherDesc": "Part of Microsoft Gaming division.",
+        "publisherWebsite": "https://www.xbox.com/en-US/xbox-game-studios",
+        "publisherDirector": {
+            "name": "Phil",
+            "surname": "Spencer"
+        },
+        "studios": [
+            {
+                "name": "343 Industries",
+                "country": "United States",
+                "dateFounded": "2007-01-01",
+                "numDevelopers": 450,
+                "director": {
+                    "name": "Pierre",
+                    "surname": "Hintze"
+                },
+                "titles": [
+                    {
+                        "title": "Halo 5",
+                        "releaseDate": "2015-10-27",
+                        "genre": "FPS"
+                    }
+                ]
+            },
+            {
+                "name": "Obsidian Entertainment",
+                "country": "United States",
+                "dateFounded": "2003-06-12",
+                "numDevelopers": 200,
+                "director": {
+                    "name": "Feargus",
+                    "surname": "Urquhart"
+                },
+                "titles": [
+                    {
+                        "title": "The Outer Worlds",
+                        "releaseDate": "2019-10-25",
+                        "genre": "Open World RPG"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 4,
+        "publisherName": "Nintendo",
+        "publisherDateFounded": "1889-09-23",
+        "publisherCountry": "Japan",
+        "publisherDesc": "Game developer, publisher and hardware developer.",
+        "publisherWebsite": "https://www.nintendo.com/",
+        "publisherDirector": {
+            "name": "Shuntaro",
+            "surname": "Furukawa"
+        },
+        "studios": [
+            {
+                "name": "Nintendo Software Technology",
+                "country": "United States",
+                "dateFounded": "1998-01-01",
+                "numDevelopers": 50,
+                "director": {
+                    "name": "Minoru",
+                    "surname": "Arakawa"
+                },
+                "titles": [
+                    {
+                        "title": "Super Mario Odyssey",
+                        "releaseDate": "2017-10-27",
+                        "genre": "Platformer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 5,
+        "publisherName": "Tencent Games",
+        "publisherDateFounded": "2003-01-01",
+        "publisherCountry": "China",
+        "publisherDesc": "Large publisher focusing on mobile game market.",
+        "publisherWebsite": "https://game.qq.com/",
+        "publisherDirector": {
+            "name": "Mark",
+            "surname": "Ren"
+        },
+        "studios": [
+            {
+                "name": "Aurora Studio Group",
+                "country": "China",
+                "dateFounded": "2007-01-01",
+                "numDevelopers": 100,
+                "director": {
+                    "name": "Ethan",
+                    "surname": "Yu"
+                },
+                "titles": [
+                    {
+                        "title": "Ring of Elysium",
+                        "releaseDate": "2018-09-19",
+                        "genre": "Battle Royale"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 6,
+        "publisherName": "Team17",
+        "publisherDateFounded": "1990-12-07",
+        "publisherCountry": "United Kingdom",
+        "publisherDesc": "Game developer and publisher created by merger of 17-Bit Software and Team 7.",
+        "publisherWebsite": "https://www.team17.com/",
+        "publisherDirector": {
+            "name": "Debbie",
+            "surname": "Bestwick"
+        },
+        "studios": [
+            {
+                "name": "Team17",
+                "country": "United Kingdom",
+                "dateFounded": "1990-12-07",
+                "numDevelopers": 200,
+                "director": {
+                    "name": "Debbie",
+                    "surname": "Bestwick"
+                },
+                "titles": [
+                    {
+                        "title": "Worms Rumble",
+                        "releaseDate": "2020-12-01",
+                        "genre": "Arena shooter"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 7,
+        "publisherName": "Devolver Digital",
+        "publisherDateFounded": "2009-06-25",
+        "publisherCountry": "United States",
+        "publisherDesc": "Indie game publisher.",
+        "publisherWebsite": "https://www.devolverdigital.com/",
+        "publisherDirector": {
+            "name": "Douglas",
+            "surname": "Morin"
+        },
+        "studios": [
+            {
+                "name": "Croteam",
+                "country": "Croatia",
+                "dateFounded": "2010-01-01",
+                "numDevelopers": 38,
+                "director": {
+                    "name": "Roman",
+                    "surname": "Ribarić"
+                },
+                "titles": [
+                    {
+                        "title": "Serious Sam: Siberian Mayhem",
+                        "releaseDate": "2022-01-25",
+                        "genre": "FPS"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 8,
+        "publisherName": "Annapurna Interactive",
+        "publisherDateFounded": "2016-12-01",
+        "publisherCountry": "United States",
+        "publisherDesc": "Indie game publisher.",
+        "publisherWebsite": "https://annapurnainteractive.com/",
+        "publisherDirector": {
+            "name": "Megan",
+            "surname": "Ellison"
+        },
+        "studios": [
+            {
+                "name": "BlueTwelve Studio",
+                "country": "France",
+                "dateFounded": "2016-01-01",
+                "numDevelopers": 28,
+                "director": {
+                    "name": "Swann",
+                    "surname": "Martin-Raget"
+                },
+                "titles": [
+                    {
+                        "title": "Stray",
+                        "releaseDate": "2022-07-19",
+                        "genre": "Platformer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 9,
+        "publisherName": "Humble Games",
+        "publisherDateFounded": "2010-10-24",
+        "publisherCountry": "United States",
+        "publisherDesc": "Digital storefront and publisher of indie games.",
+        "publisherWebsite": "https://www.humblebundle.com/",
+        "publisherDirector": {
+            "name": "Alan",
+            "surname": "Patmore"
+        },
+        "studios": [
+            {
+                "name": "Sector D2",
+                "country": "United States",
+                "dateFounded": "2010-01-01",
+                "numDevelopers": 10,
+                "director": {
+                    "name": "Roland",
+                    "surname": "Primat"
+                },
+                "titles": [
+                    {
+                        "title": "Project Wingman",
+                        "releaseDate": "2020-12-01",
+                        "genre": "Arcade Aircraft Combat"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 10,
+        "publisherName": "Ubisoft",
+        "publisherDateFounded": "1986-03-28",
+        "publisherCountry": "France",
+        "publisherDesc": "Large publisher with many video game franchises released, such as Assassins Creed, Far Cry, Tom Clancys and Splinter Cell.",
+        "publisherWebsite": "https://www.ubisoft.com/en-gb/",
+        "publisherDirector": {
+            "name": "Yves",
+            "surname": "Guillemot"
+        },
+        "studios": [
+            {
+                "name": "Massive Entertainment",
+                "country": "Sweden",
+                "dateFounded": "1997-01-01",
+                "numDevelopers": 650,
+                "director": {
+                    "name": "Thomas",
+                    "surname": "Andrén"
+                },
+                "titles": [
+                    {
+                        "title": "Tom Clancys The Division 2",
+                        "releaseDate": "2019-03-12",
+                        "genre": "Open World RPG, Looter Shooter"
+                    }
+                ]
+            },
+            {
+                "name": "Ubisoft Montreal",
+                "country": "Canada",
+                "dateFounded": "1997-04-25",
+                "numDevelopers": 4000,
+                "director": {
+                    "name": "Christophe",
+                    "surname": "Derennes"
+                },
+                "titles": [
+                    {
+                        "title": "Tom Clancys Rainbow Six Siege",
+                        "releaseDate": "2015-12-01",
+                        "genre": "Tactical Shooter"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 11,
+        "publisherName": "Nexon",
+        "publisherDateFounded": "1994-12-26",
+        "publisherCountry": "South Korea",
+        "publisherDesc": "Video game publisher that specializes in online virtual world games for PCs, consoles and mobile.",
+        "publisherWebsite": "https://www.nexon.com/main/en",
+        "publisherDirector": {
+            "name": "Owen",
+            "surname": "Mahoney"
+        },
+        "studios": [
+            {
+                "name": "Big Huge Games",
+                "country": "United States",
+                "dateFounded": "2000-02-01",
+                "numDevelopers": 109,
+                "director": {
+                    "name": "Bryant",
+                    "surname": "Freitag"
+                },
+                "titles": [
+                    {
+                        "title": "DomiNations",
+                        "releaseDate": "2015-04-01",
+                        "genre": "Mobile Strategy"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 12,
+        "publisherName": "Square Enix",
+        "publisherDateFounded": "2003-04-01",
+        "publisherCountry": "Japan",
+        "publisherDesc": "Multinational holding company.",
+        "publisherWebsite": "https://www.square-enix.com/",
+        "publisherDirector": {
+            "name": "Yosuke",
+            "surname": "Matsuda"
+        },
+        "studios": [
+            {
+                "name": "Eidos-Montréal",
+                "country": "Canada",
+                "dateFounded": "2007-11-26",
+                "numDevelopers": 481,
+                "director": {
+                    "name": "David",
+                    "surname": "Anfossi"
+                },
+                "titles": [
+                    {
+                        "title": "Deus Ex: Mankind Divided",
+                        "releaseDate": "2016-08-23",
+                        "genre": "Stealth FPS"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 13,
+        "publisherName": "Bandai Namco Entertainment",
+        "publisherDateFounded": "2006-03-31",
+        "publisherCountry": "Japan",
+        "publisherDesc": "Multinational game publisher.",
+        "publisherWebsite": "https://en.bandainamcoent.eu/",
+        "publisherDirector": {
+            "name": "Satoshi",
+            "surname": "Oshita"
+        },
+        "studios": [
+            {
+                "name": "Bandai Namco Studios",
+                "country": "Japan",
+                "dateFounded": "2012-04-02",
+                "numDevelopers": 1115,
+                "director": {
+                    "name": "Daisuke",
+                    "surname": "Uchiyama"
+                },
+                "titles": [
+                    {
+                        "title": "Ace Combat 7: Skies Unknown",
+                        "releaseDate": "2019-01-18",
+                        "genre": "Arcade Aircraft Combat"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 14,
+        "publisherName": "Take-Two Interactive",
+        "publisherDateFounded": "1993-09-30",
+        "publisherCountry": "United States",
+        "publisherDesc": "Large holding company that owns two large publishers, Rockstar Games and 2K.",
+        "publisherWebsite": "https://www.take2games.com/",
+        "publisherDirector": {
+            "name": "Strauss",
+            "surname": "Zelnick"
+        },
+        "studios": [
+            {
+                "name": "Rockstar North",
+                "country": "United Kingdom",
+                "dateFounded": "1987-01-01",
+                "numDevelopers": 650,
+                "director": {
+                    "name": "Andrew",
+                    "surname": "Semple"
+                },
+                "titles": [
+                    {
+                        "title": "Grand Theft Auto V",
+                        "releaseDate": "2013-09-17",
+                        "genre": "Open World RPG"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "publisherID": 15,
+        "publisherName": "Electronic Arts",
+        "publisherDateFounded": "1982-05-27",
+        "publisherCountry": "United States",
+        "publisherDesc": "Large publisher with many famous franchises including Battlefield, Need for Speed, The Sims, Mass Effect and Command & Conquer",
+        "publisherWebsite": "https://www.ea.com/en-gb",
+        "publisherDirector": {
+            "name": "Andrew",
+            "surname": "Wilson"
+        },
+        "studios": [
+            {
+                "name": "DICE",
+                "country": "Sweden",
+                "dateFounded": "1992-05-01",
+                "numDevelopers": 714,
+                "director": {
+                    "name": "Phil",
+                    "surname": "Hutcheon"
+                },
+                "titles": [
+                    {
+                        "title": "Battlefield 2042",
+                        "releaseDate": "2021-11-12",
+                        "genre": "FPS"
+                    }
+                ]
+            }
+        ]
+    }
+]

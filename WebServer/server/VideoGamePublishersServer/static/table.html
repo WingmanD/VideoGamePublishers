@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="table.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Table</title>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/index.html">Video Game Publishers</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/index.html">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/table.html">Table <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<div class="container h1 align-content-center blur">
+
+    <h1>Video Game Publishers Dataset</h1>
+    <button type="button" class="btn btn-primary" onclick="exportFullJson()">Download JSON</button>
+    <button type="button" class="btn btn-success" onclick="exportFullCsv()">Download CSV</button>
+
+</div>
+<br>
+<br>
+
+<div class="tableContainer">
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item">
+                <button class="page-link" tabindex="-1" onclick="getPage(currentPage - 1)">Previous</button>
+            </li>
+            <li class="page-item">
+                <button class="page-link" onclick=getPage(0)>1</button>
+            </li>
+            <li class="page-item active">
+                <button class="page-link" onclick=getPage(1)>2</button>
+            </li>
+            <li class="page-item">
+                <button class="page-link" onclick=getPage(2)>3</button>
+            </li>
+            <li class="page-item" id="nextPageButton">
+                <button class="page-link" onclick="getPage(currentPage + 1)">Next</button>
+            </li>
+            <li class="page-item">
+                <label class="page-link" for="pageSize">Items per page: </label>
+            </li>
+            <li class="page-item">
+                <input class="page-link" type="text" id="pageSize" name="pageSize" size="2" maxlength="2" value="5"
+                       onchange="getPage(0)">
+            </li>
+            <li class="page-item">
+                <select class="page-link" name="searchType" id="searchType" onchange="getPage(0, true)" style="height: 100%">
+                    <option value="0">All (wildcard)</option>
+                    <option value="1">Publisher Name</option>
+                    <option value="2">Studio Name</option>
+                    <option value="3">Game Title</option>
+                </select>
+            </li>
+            <li class="page-item">
+                <input class="page-link" type="text" id="searchVerb" name="searchVerb" size="30" maxlength="30"
+                       onchange="getPage(0, true)">
+            </li>
+            <li class="page-item">
+                <button class="page-link" onclick=exportPartialCsv()>Export as CSV</button>
+            </li>
+            <li class="page-item">
+                <button class="page-link" onclick=exportPartialJson()>Export as JSON</button>
+            </li>
+        </ul>
+    </nav>
+    <table>
+        <thead>
+        <tr>
+            <th>Publisher ID</th>
+            <th>Publisher Name</th>
+            <th>Publisher Date Founded</th>
+            <th>Publisher Country</th>
+            <th>Description</th>
+            <th>Website</th>
+            <th>Publisher CEO Name</th>
+            <th>Publisher CEO Surname</th>
+            <th>Studio Name</th>
+            <th>Studio Country</th>
+            <th>Studio Date Founded</th>
+            <th>Number of developers</th>
+            <th>Studio CEO Name</th>
+            <th>Studio CEO Surname</th>
+            <th>Game Title</th>
+            <th>Release Date</th>
+            <th>Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+</html>
+
+<script>
+    let currentPage = 0;
+    let totalPages = 0;
+
+    getPage(currentPage, true);
+
+    function getPage(page, forceReload = false) {
+        if (page < 0) {
+            page = 0;
+        }
+        if (page >= totalPages) {
+            page = Math.max(0, totalPages - 1);
+        }
+
+        if (currentPage === page && !forceReload) {
+            return;
+        }
+
+        currentPage = page;
+        fetch("/data/?pageIndex=" + currentPage + "&pageSize=" + pageSize.value + "&searchType=" + searchType.value + "&search=" + searchVerb.value)
+            .then(response => response.json())
+            .then(data => updateTable(data));
+    }
+
+    let attributes = ["publisherID", "publisherName", "publisherDateFounded", "publisherCountry", "publisherDesc", "publisherWebsite",
+        "publisherDirectorName", "publisherDirectorSurname", "studioName", "studioCountry", "studioDateFounded", "numDevelopers", "studioDirectorName", "studioDirectorSurname",
+        "gameTitle", "gameReleaseDate", "genre"];
+
+    function updateTable(data) {
+        let table = document.querySelector("table");
+        let tbody = table.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        if (data["rowCount"] > 0) {
+            for (let i = 0; i < data["publishers"].length; i++) {
+                let row = document.createElement("tr");
+
+                let rowData = data["publishers"][i];
+
+                for (let j = 0; j < attributes.length; j++) {
+                    let cell = document.createElement("td");
+                    cell.innerText = rowData[attributes[j]];
+                    row.appendChild(cell);
+                }
+
+                tbody.appendChild(row);
+            }
+        }
+
+        totalPages = Math.ceil(data["rowCount"] / pageSize.value);
+
+        let pagination = document.getElementsByClassName("pagination")[0];
+        while (pagination.children.length > 1) {
+            let pageElement = pagination.children[1];
+            if (pageElement.id === "nextPageButton") {
+                break;
+            }
+            pagination.removeChild(pageElement);
+        }
+
+        for (let i = 0; i < totalPages; i++) {
+            let pageElement = document.createElement("li");
+            pageElement.className = "page-item";
+            let pageButton = document.createElement("button");
+            pageButton.className = "page-link";
+            pageButton.setAttribute("onclick", "getPage(" + i + ")");
+            pageButton.innerText = i + 1;
+            pageElement.appendChild(pageButton);
+
+            if (i === currentPage) {
+                pageElement.className += " active";
+            }
+
+            pagination.insertBefore(pageElement, pagination.children[pagination.children.length - 7]);
+        }
+    }
+    
+    function exportFullJson() {
+        window.location.href = "/data/exportJson";
+    }
+    
+    function exportFullCsv() {
+        window.location.href = "/data/exportCsv";
+    }
+
+    function exportPartialJson() {
+        const url = "/data/exportJson" + "?pageIndex=" + currentPage + "&pageSize=" + pageSize.value + "&searchType=" + searchType.value + "&search=" + searchVerb.value;
+        fetch(url).then(response => response.json()).then(data => {
+            let a = document.createElement("a");
+            a.href = "data:application/json," + encodeURIComponent(JSON.stringify(data));
+            a.download = "data.json";
+            a.click();
+        });
+    }
+
+    function exportPartialCsv() {
+        const url = "/data/exportCsv" + "?pageIndex=" + currentPage + "&pageSize=" + pageSize.value + "&searchType=" + searchType.value + "&search=" + searchVerb.value;
+        fetch(url).then(response => response.json()).then(data => new Blob([data], {
+            type: 'text/plain'
+        })).then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'export.csv';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+        });
+    }
+</script>
