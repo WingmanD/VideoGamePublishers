@@ -67,7 +67,8 @@
                        onchange="getPage(0)">
             </li>
             <li class="page-item">
-                <select class="page-link" name="searchType" id="searchType" onchange="getPage(0, true)" style="height: 100%">
+                <select class="page-link" name="searchType" id="searchType" onchange="getPage(0, true)"
+                        style="height: 100%">
                     <option value="0">All (wildcard)</option>
                     <option value="1">Publisher Name</option>
                     <option value="2">Studio Name</option>
@@ -192,11 +193,11 @@
             pagination.insertBefore(pageElement, pagination.children[pagination.children.length - 7]);
         }
     }
-    
+
     function exportFullJson() {
         window.location.href = "/data/exportJson";
     }
-    
+
     function exportFullCsv() {
         window.location.href = "/data/exportCsv";
     }
@@ -227,4 +228,98 @@
             a.remove();
         });
     }
+
+    function createPublisher() {
+        const request = new XMLHttpRequest();
+        request.open("POST", "/data/", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send("{" +
+            "    \"publisherCountry\": \"United Kingdom\"," +
+            "    \"publisherDateFounded\": \"2000-04-28\"," +
+            "    \"publisherDesc\": \"Game developer and publisher of community driven games\"," +
+            "    \"publisherDirector\": {" +
+            "        \"name\": \"Phil\"," +
+            "        \"surname\": \"Mansel\"" +
+            "    }," +
+            "    \"publisherName\": \"Jagex\"," +
+            "    \"publisherWebsite\": \"https://www.jagex.com/en-GB/\"," +
+            "    \"studios\": [" +
+            "        {" +
+            "            \"country\": \"Croatia\"," +
+            "            \"dateFounded\": \"2010-01-01\"," +
+            "            \"director\": {" +
+            "                \"name\": \"Vinka\"," +
+            "                \"surname\": \"Sesar Vucic\"" +
+            "            }," +
+            "            \"name\": \"Gamepires\"," +
+            "            \"numDevelopers\": 53," +
+            "            \"titles\": [" +
+            "                {" +
+            "                    \"gameReleaseDate\": \"2018-08-29\"," +
+            "                    \"gameTitle\": \"SCUM\"," +
+            "                    \"genre\": \"Survival\"" +
+            "                }," +
+            "                {" +
+            "                    \"gameReleaseDate\": \"2013-10-8\"," +
+            "                    \"gameTitle\": \"Gas Guzzlers Extreme\"," +
+            "                    \"genre\": \"Racing shooter\"" +
+            "                }" +
+            "            ]" +
+            "        }" +
+            "    ]" +
+            "}");
+    }
+
+    function updatePublisher(id) {
+        const request = new XMLHttpRequest();
+        request.open("PUT", "/data/" + id, true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send("{" +
+            "    \"publisherCountry\": \"United Kingdom\"," +
+            "    \"publisherDateFounded\": \"2000-04-28\"," +
+            "    \"publisherDesc\": \"Game developer and publisher of community driven games\"," +
+            "    \"publisherDirector\": {" +
+            "        \"name\": \"Phil\"," +
+            "        \"surname\": \"Mansel\"" +
+            "    }," +
+            "    \"publisherName\": \"Jagex\"," +
+            "    \"publisherWebsite\": \"https://www.jagex.com/en-GB/\"," +
+            "    \"studios\": [" +
+            "        {" +
+            "            \"country\": \"Croatia\"," +
+            "            \"dateFounded\": \"2010-01-01\"," +
+            "            \"director\": {" +
+            "                \"name\": \"Vinka\"," +
+            "                \"surname\": \"Sesar Vucic\"" +
+            "            }," +
+            "            \"name\": \"Gamepires\"," +
+            "            \"numDevelopers\": 53," +
+            "            \"titles\": [" +
+            "                {" +
+            "                    \"gameReleaseDate\": \"2018-08-29\"," +
+            "                    \"gameTitle\": \"SCUM\"," +
+            "                    \"genre\": \"Survival\"" +
+            "                }," +
+            "                {" +
+            "                    \"gameReleaseDate\": \"2013-10-08\"," +
+            "                    \"gameTitle\": \"Gas Guzzlers Extreme\"," +
+            "                    \"genre\": \"Racing shooter\"" +
+            "                }," +
+            "                {" +
+            "                    \"gameReleaseDate\": \"2012-05-04\"," +
+            "                    \"gameTitle\": \"Gas Guzzlers: Combat Carnage\"," +
+            "                    \"genre\": \"Racing shooter\"" +
+            "                }" +
+            "            ]" +
+            "        }" +
+            "    ]" +
+            "}");
+    }
+    
+    function deletePublisher(id) {
+        const request = new XMLHttpRequest();
+        request.open("DELETE", "/data/" + id, true);
+        request.send();
+    }
+
 </script>

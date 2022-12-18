@@ -2,7 +2,7 @@
 
 int main()
 {
-    drogon::app().addListener("0.0.0.0", 80);
+    //drogon::app().loadConfigFile("/Users/davidcemeljic/Library/CloudStorage/OneDrive-Personal/Documents/FER/7-sem/OR/Labosi/lab/VideoGamePublishers/WebServer/server/VideoGamePublishersServer/config.json");
     drogon::app().loadConfigFile("../server/VideoGamePublishersServer/config.json");
 
     drogon::app().run();

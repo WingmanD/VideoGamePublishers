@@ -1,6 +1,7 @@
 [requires]
 drogon/1.8.0
 libpqxx/7.7.4
+fmt/9.1.0
 
 [generators]
 cmake

@@ -1,0 +1,509 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "VideoGamePublishers - OpenAPI 3.0",
+    "description": "VideoGamePublishers is an open dataset about video game publishers, their studios and games. \n\nSome useful links:\n- [VideoGamePublishers repository](https://github.com/WingmanD/VideoGamePublishers)",
+    "contact": {
+      "email": "dc52317@fer.hr"
+    },
+    "license": {
+      "name": "GPL-3.0",
+      "url": "https://github.com/WingmanD/VideoGamePublishers/blob/main/LICENSE"
+    },
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Publisher",
+      "description": "Publisher with it's studios and their titles"
+    },
+    {
+      "name": "Director",
+      "description": "Director of a publisher or a studio"
+    },
+    {
+      "name": "Studio",
+      "description": "Studio with it's titles"
+    },
+    {
+      "name": "Title",
+      "description": "Video game"
+    }
+  ],
+  "paths": {
+    "/data": {
+      "get": {
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Get all publishers from the dataset",
+        "description": "Get all publishers from the dataset",
+        "operationId": "getData",
+        "responses": {
+          "200": {
+            "description": "Already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllPublishers"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Add a new publisher to the dataset",
+        "description": "Add a new publisher to the dataset",
+        "operationId": "createPublisher",
+        "requestBody": {
+          "description": "Create a new publisher in the dataset",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publisher"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publisher"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publisher"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/data/{publisherId}": {
+      "get": {
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Find publisher by ID",
+        "description": "Returns a single publisher",
+        "operationId": "getPublisher",
+        "parameters": [
+          {
+            "name": "publisherId",
+            "in": "path",
+            "description": "ID of publisher to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publisher"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Publisher not found"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Update an existing publisher",
+        "description": "Update an existing publisher by ID",
+        "operationId": "updatePublisher",
+        "requestBody": {
+          "description": "Update an existing publisher",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publisher"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "name": "publisherId",
+            "in": "path",
+            "description": "ID of publisher to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publisher"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Publisher"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON"
+          },
+          "404": {
+            "description": "Publisher not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Publisher"
+        ],
+        "summary": "Deletes a publisher with all it's studios, their games and directors",
+        "description": "delete a publisher",
+        "operationId": "deletePublisher",
+        "parameters": [
+          {
+            "name": "publisherId",
+            "in": "path",
+            "description": "Publisher id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid JSON"
+          },
+          "404": {
+            "description": "Publisher not found"
+          }
+        }
+      }
+    },
+    "/data/studio/{studioId}": {
+      "get": {
+        "tags": [
+          "Studio"
+        ],
+        "summary": "Find studio by ID",
+        "description": "Returns a single studio",
+        "operationId": "getStudio",
+        "parameters": [
+          {
+            "name": "studioId",
+            "in": "path",
+            "description": "ID of studio to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studio"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Studio not found"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      }
+    },
+    "/data/director/{directorId}": {
+      "get": {
+        "tags": [
+          "Director"
+        ],
+        "summary": "Find director by ID",
+        "description": "Returns a single director",
+        "operationId": "getDirector",
+        "parameters": [
+          {
+            "name": "directorId",
+            "in": "path",
+            "description": "ID of director to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Director"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Director not found"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      }
+    },
+    "/data/title/{titleId}": {
+      "get": {
+        "tags": [
+          "Title"
+        ],
+        "summary": "Find title by ID",
+        "description": "Returns a single title",
+        "operationId": "getTitle",
+        "parameters": [
+          {
+            "name": "titleId",
+            "in": "path",
+            "description": "ID of title to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Title"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Title not found"
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Publisher": {
+        "required": [
+          "publisherName",
+          "publisherDateFounded",
+          "publisherCountry",
+          "publisherDescription",
+          "publisherWebsite",
+          "publisherDirector",
+          "studios"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "publisherName": {
+            "type": "string",
+            "example": "Embracer Group"
+          },
+          "publisherDateFounded": {
+            "type": "string",
+            "example": "2011-06-01T00:00:00.000Z"
+          },
+          "publisherCountry": {
+            "type": "string",
+            "example": "Sweden"
+          },
+          "publisherDescription": {
+            "type": "string",
+            "example": "Formerly known as Nordic Games Licensing AB and THQ Nordic AB."
+          },
+          "publisherWebsite": {
+            "type": "string",
+            "example": "https://embracer.com/"
+          },
+          "publisherDirector": {
+            "$ref": "#/components/schemas/Director"
+          },
+          "studios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Studio"
+            }
+          }
+        }
+      },
+      "AllPublishers": {
+        "required": [
+          "publishers"
+        ],
+        "type": "object",
+        "properties": {
+          "publishers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Publisher"
+            }
+          }
+        }
+      },
+      "Director": {
+        "required": [
+          "name",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "example": "Lars"
+          },
+          "surname": {
+            "type": "string",
+            "example": "Wingefors"
+          }
+        }
+      },
+      "Studio": {
+        "required": [
+          "name",
+          "dateFounded",
+          "country",
+          "numDevelopers",
+          "director",
+          "titles"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "example": "Ghost Ship Games"
+          },
+          "country": {
+            "type": "string",
+            "example": "Denmark"
+          },
+          "dateFounded": {
+            "type": "string",
+            "example": "2016-01-01T00:00:00.000Z"
+          },
+          "numDevelopers": {
+            "type": "string",
+            "example": 32
+          },
+          "director": {
+            "$ref": "#/components/schemas/Director"
+          },
+          "titles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Title"
+            }
+          }
+        }
+      },
+      "Title": {
+        "required": [
+          "gameTitle",
+          "gameReleaseDate",
+          "genre"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "gameTitle": {
+            "type": "string",
+            "example": "Deep Rock Galactic"
+          },
+          "gameReleaseDate": {
+            "type": "string",
+            "example": "2018-02-28T00:00:00.000Z"
+          },
+          "genre": {
+            "type": "string",
+            "example": "CO-OP PvE FPS"
+          }
+        }
+      }
+    }
+  }
+}
