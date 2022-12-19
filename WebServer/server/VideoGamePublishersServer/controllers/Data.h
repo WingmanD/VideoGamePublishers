@@ -153,7 +153,7 @@ public:
                          std::function<void (const drogon::HttpResponsePtr&)>&& callback, int publisherId) const;
 
     /*
-     * Put /data/{publisherId}
+     * Other paths
      */
     void notImplemented(const drogon::HttpRequestPtr& req,
                         std::function<void (const drogon::HttpResponsePtr&)>&& callback, int publisherId) const;
