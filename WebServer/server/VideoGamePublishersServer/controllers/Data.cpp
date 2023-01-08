@@ -1,6 +1,7 @@
 #include "Data.h"
 #include <pqxx/pqxx>
 #include <boost/dll/runtime_symbol_info.hpp>
+#include <drogon/HttpClient.h>
 #include <fmt/format.h>
 
 #include "../DbStatics.h"
@@ -200,6 +201,15 @@ void Data::getStudio(const drogon::HttpRequestPtr& req, std::function<void(const
                 message = "Database error";
                 studioJson = Json::Value();
             }
+            else
+            {
+                studioJson["@context"] = Json::Value();
+                studioJson["@context"]["director"] = "https://schema.org/Person";
+                studioJson["@context"]["name"] = "https://schema.org/name";
+                studioJson["@context"]["country"] = "https://schema.org/name";
+                studioJson["@context"]["dateFounded"] = "https://schema.org/Date";
+                studioJson["@context"]["titles"] = "https://schema.org/VideoGame";
+            }
         }
     }
     else
@@ -235,7 +245,7 @@ void Data::getTitle(const drogon::HttpRequestPtr& req, std::function<void(const 
 
     int status = 200;
     std::string message = "Fetched title data";
-    Json::Value studioJson;
+    Json::Value titleJson;
 
     Json::CharReaderBuilder builder;
     std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
@@ -248,13 +258,13 @@ void Data::getTitle(const drogon::HttpRequestPtr& req, std::function<void(const 
         {
             status = 500;
             message = fmt::format("Database error", titleId);
-            studioJson = Json::Value();
+            titleJson = Json::Value();
         }
         else
         {
             const std::string row0 = dbResult[0][0].c_str();
 
-            bool parsingSuccessful = reader->parse(row0.c_str(), row0.c_str() + row0.size(), &studioJson, &errors);
+            bool parsingSuccessful = reader->parse(row0.c_str(), row0.c_str() + row0.size(), &titleJson, &errors);
             if (!parsingSuccessful)
             {
                 std::cout << "Failed to parse JSON" << std::endl;
@@ -262,7 +272,14 @@ void Data::getTitle(const drogon::HttpRequestPtr& req, std::function<void(const 
 
                 status = 500;
                 message = "Database error";
-                studioJson = Json::Value();
+                titleJson = Json::Value();
+            }
+            else
+            {
+                titleJson["@context"] = Json::Value();
+                titleJson["@context"]["gameTitle"] = "name";
+                titleJson["@context"]["gameReleaseDate"] = "datePublished";
+                titleJson["@context"]["genre"] = "genre";
             }
         }
     }
@@ -273,7 +290,7 @@ void Data::getTitle(const drogon::HttpRequestPtr& req, std::function<void(const 
     }
 
     const auto response = drogon::HttpResponse::newHttpJsonResponse(
-        ResponseWrapper(status, message, studioJson));
+        ResponseWrapper(status, message, titleJson));
     response->setStatusCode(static_cast<drogon::HttpStatusCode>(status));
     callback(response);
 }
@@ -299,7 +316,7 @@ void Data::getDirector(const drogon::HttpRequestPtr& req,
 
     int status = 200;
     std::string message = "Fetched director data";
-    Json::Value studioJson;
+    Json::Value directorJson;
 
     Json::CharReaderBuilder builder;
     std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
@@ -312,13 +329,13 @@ void Data::getDirector(const drogon::HttpRequestPtr& req,
         {
             status = 500;
             message = fmt::format("Database error", directorId);
-            studioJson = Json::Value();
+            directorJson = Json::Value();
         }
         else
         {
             const std::string row0 = dbResult[0][0].c_str();
 
-            bool parsingSuccessful = reader->parse(row0.c_str(), row0.c_str() + row0.size(), &studioJson, &errors);
+            bool parsingSuccessful = reader->parse(row0.c_str(), row0.c_str() + row0.size(), &directorJson, &errors);
             if (!parsingSuccessful)
             {
                 std::cout << "Failed to parse JSON" << std::endl;
@@ -326,7 +343,14 @@ void Data::getDirector(const drogon::HttpRequestPtr& req,
 
                 status = 500;
                 message = "Database error";
-                studioJson = Json::Value();
+                directorJson = Json::Value();
+            }
+            else
+            {
+                directorJson["@context"] = Json::Value();
+                directorJson["@context"]["@vocab"] = "http://schema.org/";
+                directorJson["@context"]["name"] = "givenName";
+                directorJson["@context"]["surname"] = "familyName";
             }
         }
     }
@@ -337,7 +361,7 @@ void Data::getDirector(const drogon::HttpRequestPtr& req,
     }
 
     const auto response = drogon::HttpResponse::newHttpJsonResponse(
-        ResponseWrapper(status, message, studioJson));
+        ResponseWrapper(status, message, directorJson));
     response->setStatusCode(static_cast<drogon::HttpStatusCode>(status));
     callback(response);
 }
@@ -388,7 +412,7 @@ void Data::updatePublisher(const drogon::HttpRequestPtr& req,
                            std::function<void(const drogon::HttpResponsePtr&)>&& callback, int publisherId) const
 {
     const auto requestJson = req->getJsonObject();
-    
+
     if (requestJson == nullptr || requestJson->empty())
     {
         const auto response = drogon::HttpResponse::newHttpJsonResponse(
@@ -428,13 +452,13 @@ void Data::updatePublisher(const drogon::HttpRequestPtr& req,
 }
 
 void Data::notImplemented(const drogon::HttpRequestPtr& req,
-    std::function<void(const drogon::HttpResponsePtr&)>&& callback, int publisherId) const
+                          std::function<void(const drogon::HttpResponsePtr&)>&& callback, int publisherId) const
 {
-    
     const auto response = drogon::HttpResponse::newHttpJsonResponse(
         ResponseWrapper(501, "Not implemented", Json::Value()));
     response->setStatusCode(static_cast<drogon::HttpStatusCode>(501));
-    callback(response);}
+    callback(response);
+}
 
 void Data::deletePublisher(const drogon::HttpRequestPtr& req,
                            std::function<void(const drogon::HttpResponsePtr&)>&& callback, int publisherId) const
@@ -729,6 +753,68 @@ join games on games."idStudio" = studios.id {} order by publishers.id limit {} o
     Json::Value value;
     value["csv"] = csv;
     const auto response = drogon::HttpResponse::newHttpJsonResponse(csv);
+    callback(response);
+}
+
+void Data::getRegenerateJson(const drogon::HttpRequestPtr& req,
+                             std::function<void(const drogon::HttpResponsePtr&)>&& callback) const
+{
+    const auto client = drogon::HttpClient::newHttpClient("http://localhost:5000");
+    req->setMethod(drogon::Get);
+    req->setPath("/validate");
+    const auto resp = client->sendRequest(req);
+
+    std::cout << "validation status code: " << resp.second->getStatusCode() << std::endl;
+
+    const std::string message = resp.second->getStatusCode() == drogon::k200OK
+                                    ? "JSON regenerated successfully"
+                                    : "Unauthorized";
+
+    int statusCode = drogon::k500InternalServerError;
+
+    if (resp.second->getStatusCode() == drogon::k200OK)
+    {
+        if (DbStatics::updateJsonExportFile())
+        {
+            statusCode = drogon::k200OK;
+        }
+    }
+
+    const auto response = drogon::HttpResponse::newHttpJsonResponse(
+        ResponseWrapper(resp.second->getStatusCode(), message, Json::Value()));
+    response->setStatusCode(static_cast<drogon::HttpStatusCode>(statusCode));
+
+    callback(response);
+}
+
+void Data::getRegenerateCsv(const drogon::HttpRequestPtr& req,
+                            std::function<void(const drogon::HttpResponsePtr&)>&& callback) const
+{
+    const auto client = drogon::HttpClient::newHttpClient("http://localhost:5000");
+    req->setMethod(drogon::Get);
+    req->setPath("/validate");
+    const auto resp = client->sendRequest(req);
+
+    std::cout << "validation status code: " << resp.second->getStatusCode() << std::endl;
+
+    const std::string message = resp.second->getStatusCode() == drogon::k200OK
+                                    ? "JSON regenerated successfully"
+                                    : "Unauthorized";
+
+    int statusCode = drogon::k500InternalServerError;
+
+    if (resp.second->getStatusCode() == drogon::k200OK)
+    {
+        if (DbStatics::updateCsvExportFile())
+        {
+            statusCode = drogon::k200OK;
+        }
+    }
+
+    const auto response = drogon::HttpResponse::newHttpJsonResponse(
+        ResponseWrapper(resp.second->getStatusCode(), message, Json::Value()));
+    response->setStatusCode(static_cast<drogon::HttpStatusCode>(statusCode));
+
     callback(response);
 }
 

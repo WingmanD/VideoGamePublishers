@@ -10,5 +10,5 @@ cmake_minimum_required(VERSION 3.23)
 
  file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "server/VideoGamePublishersServer/*")
  
- add_executable(Server ${SOURCES})
+ add_executable(Server ${SOURCES} ${VIEWSRC})
  target_link_libraries(Server ${CONAN_LIBS})

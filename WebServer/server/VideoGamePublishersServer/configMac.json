@@ -8,10 +8,10 @@
     ],
     "app": {
         "number_of_threads": 0,
-        "enable_session": true,
-        "session_timeout": 1200,
+        "enable_session": false,
+        "session_timeout": 0,
         "session_same_site" : "Strict",
-        "document_root": "../server/VideoGamePublishersServer/static",
+        "document_root": "../../server/VideoGamePublishersServer/static",
         "home_page": "index.html",
         "use_implicit_page": true,
         "implicit_page": "index.html",
@@ -47,7 +47,7 @@
         "max_connections_per_ip": 0,
         "load_dynamic_views": true,
         "dynamic_views_path": [
-            "../server/VideoGamePublishersServer/views"
+            "./views"
         ],
         "dynamic_views_output_path": "",
         "enable_unicode_escaping_in_json": true,

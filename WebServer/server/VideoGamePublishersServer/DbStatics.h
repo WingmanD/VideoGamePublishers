@@ -46,6 +46,9 @@ public:
     static Json::Value getStudioData(int id);
     static Json::Value getTitleData(int gameId);
 
+    static bool updateJsonExportFile();
+    static bool updateCsvExportFile();
+
     static std::string makePublisherQuery(const std::string& filterQuery);
     static std::string makeStudioQuery(const std::string& filterQuery);
     static std::string makeTitleQuery(const std::string& filterQuery);

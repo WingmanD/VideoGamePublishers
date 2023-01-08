@@ -81,7 +81,7 @@ public:
         METHOD_ADD(Data::updatePublisher, "/{publisherId}", drogon::Put);
         METHOD_ADD(Data::notImplemented, "/", drogon::Patch);
         METHOD_ADD(Data::deletePublisher, "/{publisherId}", drogon::Delete);
-    
+
         METHOD_ADD(Data::notImplemented, "/studio", drogon::Get);
         METHOD_ADD(Data::getStudio, "/studio/{studioId}", drogon::Get);
         METHOD_ADD(Data::notImplemented, "/studio", drogon::Post);
@@ -99,7 +99,7 @@ public:
         METHOD_ADD(Data::notImplemented, "/director", drogon::Post);
         METHOD_ADD(Data::notImplemented, "/director/{directorId}", drogon::Patch);
         METHOD_ADD(Data::notImplemented, "/director/{directorId}", drogon::Delete);
-    
+
         METHOD_ADD(Data::getExportJson, "/exportJson", drogon::Get);
         METHOD_ADD(Data::notImplemented, "/exportJson", drogon::Post);
         METHOD_ADD(Data::notImplemented, "/exportJson", drogon::Patch);
@@ -109,6 +109,9 @@ public:
         METHOD_ADD(Data::notImplemented, "/exportCsv", drogon::Post);
         METHOD_ADD(Data::notImplemented, "/exportCsv", drogon::Patch);
         METHOD_ADD(Data::notImplemented, "/exportCsv", drogon::Delete);
+
+        METHOD_ADD(Data::getRegenerateJson, "/regenerateJson", drogon::Get);
+        METHOD_ADD(Data::getRegenerateCsv, "/regenerateCsv", drogon::Get);
     METHOD_LIST_END
 
 public:
@@ -176,6 +179,18 @@ public:
      */
     void getExportCsv(const drogon::HttpRequestPtr& req,
                       std::function<void (const drogon::HttpResponsePtr&)>&& callback) const;
+
+    /*
+     * GET /data/regenerateJson
+     */
+    void getRegenerateJson(const drogon::HttpRequestPtr& req,
+                           std::function<void (const drogon::HttpResponsePtr&)>&& callback) const;
+
+    /*
+     * GET /data/regenerateCsv
+     */
+    void getRegenerateCsv(const drogon::HttpRequestPtr& req,
+                           std::function<void (const drogon::HttpResponsePtr&)>&& callback) const;
 
 private:
     [[nodiscard]] std::string getFilterQueryByType(const std::string& searchQuery, FilterType filterType) const;

@@ -1,7 +1,6 @@
-﻿#include "DbStatics.h"
-#include "DbStatics.h"
 #include "DbStatics.h"
 
+#include <fstream>
 #include <iostream>
 #include <pqxx/pqxx>
 #include <fmt/format.h>
@@ -10,9 +9,12 @@
 
 pqxx::connection* DbStatics::getDatabaseConnection()
 {
-    //return new pqxx::connection("dbname=VideoGamePublishers user=postgres password=bazepodataka hostaddr=127.0.0.1 port=5432");
+#ifdef WIN32
     return new pqxx::connection(
         "dbname=VideoGamePublishers user=postgres password=David2702 hostaddr=127.0.0.1 port=5433");
+#else
+    return new pqxx::connection("dbname=VideoGamePublishers user=postgres password=bazepodataka hostaddr=127.0.0.1 port=5432");
+#endif
 }
 
 DbResult DbStatics::createNewPublisher(const Json::Value& publisher)
@@ -870,6 +872,130 @@ Json::Value DbStatics::getTitleData(int gameId)
     }
 
     return studioJson;
+}
+
+bool DbStatics::updateJsonExportFile()
+{
+    const std::string query =
+        R"(select json_agg(row_to_json(publisherList)) as "publishers"
+    from (select publishers.id as "publisherID", publishers.name as "publisherName",
+    publishers."dateFounded" as "publisherDateFounded",
+    publishers.country as "publisherCountry", publishers.description as "publisherDesc",
+    publishers.website as "publisherWebsite", json_build_object('name', directors.name, 'surname', directors.surname)
+    as "publisherDirector", (select json_agg(row_to_json(publisherStudios)) from (select studios.name as "name",
+    studios.country as "country", studios."dateFounded" as "dateFounded", studios."numDevelopers",
+    json_build_object('name', directors.name, 'surname', directors.surname) as "director",
+    (select json_agg(row_to_json(titles)) from (select games.name as "title", games."releaseDate" as "releaseDate",
+    genre from games where games."idStudio" = studios.id) as titles) as "titles" from studios
+    left join directors on studios."idDirector" = directors.id where studios."idPublisher" = publishers.id)
+    as publisherStudios) as "studios" from publishers left join directors on publishers."idDirector" = directors.id)
+    as publisherList)";
+
+    const std::unique_ptr<pqxx::connection> dbConnection = std::unique_ptr<pqxx::connection>(getDatabaseConnection());
+    if (dbConnection == nullptr || !dbConnection->is_open())
+    {
+        std::cerr << "DbStatics::updateJsonExportFile: Can't open database" << std::endl;
+        return false;
+    }
+
+    pqxx::work dbTransaction = pqxx::work(*dbConnection);
+    pqxx::result dbResult = dbTransaction.exec(query);
+
+    if (!dbResult.empty() && dbResult[0].size() > 0)
+    {
+        if (dbResult[0][0].is_null())
+        {
+            std::cerr << "DbStatics::updateJsonExportFile: Can't open database" << std::endl;
+            return false;
+        }
+
+        const std::string row0 = dbResult[0][0].c_str();
+        try
+        {
+            std::ofstream file("../server/VideoGamePublishersServer/files/data.json");
+            if (!file.is_open())
+            {
+                std::cerr << "DbStatics::updateJsonExportFile: Can't open file" << std::endl;
+                return false;
+            }
+
+            file << row0;
+            file.close();
+            return true;
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << "DbStatics::updateJsonExportFile: " << e.what() << std::endl;
+            return false;
+        }
+    }
+
+    return false;
+}
+
+bool DbStatics::updateCsvExportFile()
+{
+    const std::string query =
+        R"(select publishers.id as "publisherID", publishers.name as "publisherName", publishers."dateFounded" as "publisherDateFounded", 
+publishers.country as "publisherCountry", publishers.description as "publisherDesc", publishers.website as "publisherWebsite", 
+dirPublisher.name as "publisherDirectorName", dirPublisher.surname as "publisherDirectorSurname", studios.name as "studioName", 
+studios.country as "studioCountry", studios."dateFounded" as "studioDateFounded", studios."numDevelopers", dirStudio.name as 
+"studioDirectorName", dirStudio.surname as "studioDirectorSurname", games.name as "gameTitle", games."releaseDate" as "gameReleaseDate", genre 
+from publishers 
+left join directors dirPublisher on "idDirector" = dirPublisher.id 
+right join studios on publishers.id = "idPublisher" 
+join directors dirStudio on studios."idDirector" = dirStudio.id 
+join games on games."idStudio" = studios.id;)";
+
+    const std::unique_ptr<pqxx::connection> dbConnection = std::unique_ptr<pqxx::connection>(getDatabaseConnection());
+    if (dbConnection == nullptr || !dbConnection->is_open())
+    {
+        std::cerr << "DbStatics::updateJsonExportFile: Can't open database" << std::endl;
+        return false;
+    }
+
+    pqxx::work dbTransaction = pqxx::work(*dbConnection);
+    pqxx::result dbResult = dbTransaction.exec(query);
+
+    if (!dbResult.empty() && dbResult[0].size() > 0)
+    {
+        if (dbResult[0][0].is_null())
+        {
+            std::cerr << "DbStatics::updateCsvExportFile: Can't open database" << std::endl;
+            return false;
+        }
+
+        try
+        {
+            std::ofstream file("../server/VideoGamePublishersServer/files/data.csv");
+            if (!file.is_open())
+            {
+                std::cerr << "DbStatics::updateCsvExportFile: Can't open file" << std::endl;
+                return false;
+            }
+
+            for (const auto& row : dbResult)
+            {
+                std::string rowString;
+                for (const auto& column : row)
+                {
+                    rowString += column.c_str();
+                    rowString += ",";
+                }
+                file << rowString << std::endl;
+            }
+
+            file.close();
+            return true;
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << "DbStatics::updateCsvExportFile: " << e.what() << std::endl;
+            return false;
+        }
+    }
+
+    return false;
 }
 
 std::string DbStatics::makePublisherQuery(const std::string& filterQuery)

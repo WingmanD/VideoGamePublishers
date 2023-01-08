@@ -705,6 +705,14 @@
   "required" : [ "name", "surname" ],
   "type" : "object",
   "properties" : {
+    "context" : {
+      "type" : "object",
+      "example" : {
+        "@vocab" : "http://schema.org/",
+        "name" : "givenName",
+        "surname" : "familyName"
+      }
+    },
     "id" : {
       "type" : "integer",
       "format" : "int64",
@@ -764,6 +772,16 @@
   "required" : [ "country", "dateFounded", "director", "name", "numDevelopers", "titles" ],
   "type" : "object",
   "properties" : {
+    "context" : {
+      "type" : "object",
+      "example" : {
+        "country" : "https://schema.org/name",
+        "dateFounded" : "https://schema.org/Date",
+        "director" : "https://schema.org/Person",
+        "name" : "https://schema.org/name",
+        "titles" : "https://schema.org/VideoGame"
+      }
+    },
     "id" : {
       "type" : "integer",
       "format" : "int64",
@@ -800,6 +818,14 @@
   "required" : [ "gameReleaseDate", "gameTitle", "genre" ],
   "type" : "object",
   "properties" : {
+    "context" : {
+      "type" : "object",
+      "example" : {
+        "gameReleaseDate" : "datePublished",
+        "gameTitle" : "name",
+        "genre" : "genre"
+      }
+    },
     "id" : {
       "type" : "integer",
       "format" : "int64",

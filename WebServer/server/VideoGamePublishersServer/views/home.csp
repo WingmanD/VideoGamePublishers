@@ -1,5 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+<%inc
+     #include <drogon/drogon.h>
+%>
+<%c++ 
+    auto params = @@.get<std::unordered_map<std::string,std::string>>("params");
+    auto user = @@.get<Json::Value>("user");
+%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +19,10 @@
     <title>Video Game Publishers</title>
 </head>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="/index.html">Video Game Publishers</a>
+        <a class="navbar-brand" href="/">Video Game Publishers</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,12 +31,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/table.html">Table</a>
+                    <a class="nav-link" href="/table">Table</a>
                 </li>
             </ul>
+            <%c++ if (user.empty()) {%>
+            <span class="navbar-text">
+                <a class="nav-link" href="/auth/login">Login</a>
+            </span>
+            <%c++ } else {%>
+            <span class="navbar-text">
+                <a class="nav-link" href="/auth/logout">{% user["userinfo"]["given_name"] %} Logout</a>
+            </span>
+            <%c++ } %>
         </div>
     </div>
 </nav>
@@ -72,5 +89,5 @@
         </li>
     </ul>
 </div>
-
+</body>
 </html>

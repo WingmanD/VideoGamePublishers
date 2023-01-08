@@ -1,5 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<%inc
+     #include <drogon/drogon.h>
+%>
+<%c++ 
+    auto params = @@.get<std::unordered_map<std::string,std::string>>("params");
+    auto user = @@.get<Json::Value>("user");
+%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +18,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="/index.html">Video Game Publishers</a>
+        <a class="navbar-brand" href="/">Video Game Publishers</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,12 +27,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/index.html">Home </a>
+                    <a class="nav-link" href="/">Home </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/table.html">Table <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/table">Table <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
+            <%c++ if (user.empty()) {%>
+            <span class="navbar-text">
+                <a class="nav-link" href="/auth/login">Login</a>
+            </span>
+            <%c++ } else {%>
+            <span class="navbar-text">
+                <a class="nav-link" href="/auth/logout">{% user["userinfo"]["given_name"] %} Logout</a>
+            </span>
+            <%c++ } %>
         </div>
     </div>
 </nav>
@@ -36,7 +52,11 @@
     <h1>Video Game Publishers Dataset</h1>
     <button type="button" class="btn btn-primary" onclick="exportFullJson()">Download JSON</button>
     <button type="button" class="btn btn-success" onclick="exportFullCsv()">Download CSV</button>
-
+    <%c++ if (!user.empty()) {%>
+        <br>
+        <button type="button" class="btn btn-primary" onclick="regenerateJson()">Regenerate JSON</button>
+        <button type="button" class="btn btn-success" onclick="regenerateCsv()">Regenerate CSV</button>
+    <%c++ } %>
 </div>
 <br>
 <br>
@@ -211,6 +231,28 @@
             a.click();
         });
     }
+    
+    function regenerateJson() {
+        const url = "/data/regenerateJson";
+        fetch(url).then(response => {
+            if (response.ok) {
+                alert("Regeneration successful");
+            } else {
+                alert("Regeneration failed");
+            }
+        });
+    }
+    
+    function regenerateCsv() {
+        const url = "/data/regenerateCsv";
+        fetch(url).then(response => {
+            if (response.ok) {
+                alert("Regeneration successful");
+            } else {
+                alert("Regeneration failed");
+            }
+        });
+    }
 
     function exportPartialCsv() {
         const url = "/data/exportCsv" + "?pageIndex=" + currentPage + "&pageSize=" + pageSize.value + "&searchType=" + searchType.value + "&search=" + searchVerb.value;
@@ -227,99 +269,6 @@
             window.URL.revokeObjectURL(url);
             a.remove();
         });
-    }
-
-    function createPublisher() {
-        const request = new XMLHttpRequest();
-        request.open("POST", "/data/", true);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.send("{" +
-            "    \"publisherCountry\": \"United Kingdom\"," +
-            "    \"publisherDateFounded\": \"2000-04-28\"," +
-            "    \"publisherDesc\": \"Game developer and publisher of community driven games\"," +
-            "    \"publisherDirector\": {" +
-            "        \"name\": \"Phil\"," +
-            "        \"surname\": \"Mansel\"" +
-            "    }," +
-            "    \"publisherName\": \"Jagex\"," +
-            "    \"publisherWebsite\": \"https://www.jagex.com/en-GB/\"," +
-            "    \"studios\": [" +
-            "        {" +
-            "            \"country\": \"Croatia\"," +
-            "            \"dateFounded\": \"2010-01-01\"," +
-            "            \"director\": {" +
-            "                \"name\": \"Vinka\"," +
-            "                \"surname\": \"Sesar Vucic\"" +
-            "            }," +
-            "            \"name\": \"Gamepires\"," +
-            "            \"numDevelopers\": 53," +
-            "            \"titles\": [" +
-            "                {" +
-            "                    \"gameReleaseDate\": \"2018-08-29\"," +
-            "                    \"gameTitle\": \"SCUM\"," +
-            "                    \"genre\": \"Survival\"" +
-            "                }," +
-            "                {" +
-            "                    \"gameReleaseDate\": \"2013-10-8\"," +
-            "                    \"gameTitle\": \"Gas Guzzlers Extreme\"," +
-            "                    \"genre\": \"Racing shooter\"" +
-            "                }" +
-            "            ]" +
-            "        }" +
-            "    ]" +
-            "}");
-    }
-
-    function updatePublisher(id) {
-        const request = new XMLHttpRequest();
-        request.open("PUT", "/data/" + id, true);
-        request.setRequestHeader("Content-Type", "application/json");
-        request.send("{" +
-            "    \"publisherCountry\": \"United Kingdom\"," +
-            "    \"publisherDateFounded\": \"2000-04-28\"," +
-            "    \"publisherDesc\": \"Game developer and publisher of community driven games\"," +
-            "    \"publisherDirector\": {" +
-            "        \"name\": \"Phil\"," +
-            "        \"surname\": \"Mansel\"" +
-            "    }," +
-            "    \"publisherName\": \"Jagex\"," +
-            "    \"publisherWebsite\": \"https://www.jagex.com/en-GB/\"," +
-            "    \"studios\": [" +
-            "        {" +
-            "            \"country\": \"Croatia\"," +
-            "            \"dateFounded\": \"2010-01-01\"," +
-            "            \"director\": {" +
-            "                \"name\": \"Vinka\"," +
-            "                \"surname\": \"Sesar Vucic\"" +
-            "            }," +
-            "            \"name\": \"Gamepires\"," +
-            "            \"numDevelopers\": 53," +
-            "            \"titles\": [" +
-            "                {" +
-            "                    \"gameReleaseDate\": \"2018-08-29\"," +
-            "                    \"gameTitle\": \"SCUM\"," +
-            "                    \"genre\": \"Survival\"" +
-            "                }," +
-            "                {" +
-            "                    \"gameReleaseDate\": \"2013-10-08\"," +
-            "                    \"gameTitle\": \"Gas Guzzlers Extreme\"," +
-            "                    \"genre\": \"Racing shooter\"" +
-            "                }," +
-            "                {" +
-            "                    \"gameReleaseDate\": \"2012-05-04\"," +
-            "                    \"gameTitle\": \"Gas Guzzlers: Combat Carnage\"," +
-            "                    \"genre\": \"Racing shooter\"" +
-            "                }" +
-            "            ]" +
-            "        }" +
-            "    ]" +
-            "}");
-    }
-    
-    function deletePublisher(id) {
-        const request = new XMLHttpRequest();
-        request.open("DELETE", "/data/" + id, true);
-        request.send();
     }
 
 </script>
